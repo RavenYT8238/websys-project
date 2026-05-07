@@ -1,39 +1,30 @@
 let cart = [];
-let nextId = 1;
 
 function addToCart(name, price) {
-    const existing = cart.find(item => item.name === name);
-    if (existing) {
+    if (cart.find(item => item.name === name)) {
         alert(name + " is already in cart!");
         return;
     }
-    
-    cart.push({
-        id: nextId++,
-        name: name,
-        price: price,
-        qty: 1
-    });
-    
+    cart.push({ name: name, price: price, qty: 1 });
     updateCart();
     alert(name + " added to cart!");
 }
 
-function changeQty(id, amount) {
-    const item = cart.find(item => item.id === id);
+function changeQty(name, amount) {
+    const item = cart.find(item => item.name === name);
     if (item) {
         const newQty = item.qty + amount;
         if (newQty <= 0) {
-            cart = cart.filter(item => item.id !== id);
+            cart = cart.filter(item => item.name !== name);
         } else {
             item.qty = newQty;
         }
+        updateCart();
     }
-    updateCart();
 }
 
-function removeItem(id) {
-    cart = cart.filter(item => item.id !== id);
+function removeItem(name) {
+    cart = cart.filter(item => item.name !== name);
     updateCart();
 }
 
@@ -66,8 +57,6 @@ function updateCart() {
     let totalPrice = 0;
     let itemsHtml = "";
     
-    console.log("Cart items:", cart);
-    
     for (let i = 0; i < cart.length; i++) {
         const item = cart[i];
         const subtotal = item.price * item.qty;
@@ -79,9 +68,9 @@ function updateCart() {
                 <p><strong>${item.name}</strong></p>
                 <p>Price: ₱${item.price.toLocaleString()} x ${item.qty}</p>
                 <p>Subtotal: ₱${subtotal.toLocaleString()}</p>
-                <button onclick="changeQty(${item.id}, -1)">-</button>
-                <button onclick="changeQty(${item.id}, 1)">+</button>
-                <button onclick="removeItem(${item.id})">Remove</button>
+                <button onclick="changeQty('${item.name}', -1)">-</button>
+                <button onclick="changeQty('${item.name}', 1)">+</button>
+                <button onclick="removeItem('${item.name}')">Remove</button>
             </div>
         `;
     }
@@ -97,6 +86,7 @@ function updateCart() {
         cartItemsDiv.innerHTML = itemsHtml;
     }
 }
+
 window.changeQty = changeQty;
 window.removeItem = removeItem;
 window.clearCart = clearCart;
