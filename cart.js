@@ -2,7 +2,6 @@ let cart = [];
 let nextId = 1;
 
 function addToCart(name, price) {
-    // Check if already in cart
     const existing = cart.find(item => item.name === name);
     if (existing) {
         alert(name + " is already in cart!");
@@ -67,7 +66,7 @@ function updateCart() {
     let totalPrice = 0;
     let itemsHtml = "";
     
-    console.log("Cart items:", cart); // Debug: check cart contents
+    console.log("Cart items:", cart);
     
     for (let i = 0; i < cart.length; i++) {
         const item = cart[i];
@@ -98,8 +97,6 @@ function updateCart() {
         cartItemsDiv.innerHTML = itemsHtml;
     }
 }
-
-// Make functions global
 window.changeQty = changeQty;
 window.removeItem = removeItem;
 window.clearCart = clearCart;
