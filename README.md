@@ -1,4 +1,4 @@
-Make a folder. Bye.
+Make a folder
 
 or
 
